@@ -1,0 +1,4 @@
+../test_steam/.idea/
+.venv/
+__pycache__/
+*.iml
