@@ -1,6 +1,8 @@
 import pytest
 from selenium import webdriver
 from credentials import Credentials
+from browser.browser_factory import BrowserFactory
+from browser.browser import Browser
 
 LINK_SITE = f"http://{Credentials.LOGIN}:{Credentials.PASSWORD}@the-internet.herokuapp.com/basic_auth"
 LINK_SITE2 = "https://the-internet.herokuapp.com/javascript_alerts"
@@ -12,6 +14,14 @@ LINK_SITE7 = "https://demoqa.com/frames"
 LINK_SITE8 = "http://the-internet.herokuapp.com/dynamic_content"
 LINK_SITE9 = "http://the-internet.herokuapp.com/infinite_scroll"
 LINK_SITE10 = "http://the-internet.herokuapp.com/upload"
+
+
+@pytest.fixture()
+def test_driver():
+    driver = BrowserFactory.get_driver()
+    browser = Browser(driver)
+    yield browser
+    browser.quit()
 
 
 @pytest.fixture()
@@ -90,4 +100,3 @@ def open_page_upload_image(driver):
     """Задание 11,12,13"""
     driver.get(LINK_SITE10)
     return driver
-

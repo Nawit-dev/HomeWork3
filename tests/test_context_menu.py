@@ -1,12 +1,12 @@
 from pages.main_page_contex_menu import MainPageContexMenu
 
 """Задание 4"""
+LINK_SITE3 = "https://the-internet.herokuapp.com/context_menu"
 
 
-def test_context_menu(open_page_context_menu):
+def test_context_menu(test_driver):
     true_text_alert = "You selected a context menu"
-
-    driver = MainPageContexMenu(open_page_context_menu)
-    driver.check_page_load()
-    text_alert = driver.right_click_box()
+    test_driver.get(LINK_SITE3)
+    test = MainPageContexMenu(test_driver)
+    text_alert = test.right_click_box()
     assert text_alert == true_text_alert, f"Текущий результат {text_alert}, ожидаемый результат {true_text_alert}"
