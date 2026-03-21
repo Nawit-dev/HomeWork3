@@ -1,19 +1,19 @@
 from browser.browser import Browser
-from elements.base_elements import BaseElement
-from selenium.webdriver.common.by import By
+from elements.label import Label
+
+"""Задание 1"""
 
 
 class MainPage:
-
-    TEXT = (By.XPATH, "//*[@id='content']//p")
+    TEXT = "//*[@id='content']//p"
 
     def __init__(self, browser: Browser):
         self.browser = browser
-        self.text_element = BaseElement(browser, self.TEXT, description="Main text")
+        self.text_element = Label(browser, self.TEXT)
 
-    def get_text(self):
+    def check_page_load(self) -> None:
+        """Ждем появление квадрата на стр"""
         self.text_element.wait_for_presence()
+
+    def get_text_after_basic_auth(self):
         return self.text_element.get_text()
-
-
-

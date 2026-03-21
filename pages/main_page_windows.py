@@ -1,61 +1,54 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
+from browser.browser import Browser
+from elements.button import Button
 
-"""Задание 6"""
+"""Задание 7"""
 
 
 class MainPageWindows:
-    TIMEOUT = 10
-    LINK = (By.XPATH, "//a[@href='/windows/new']")
-    TEXT_NEW_TAB = (By.XPATH, "//h3[contains(text(),'New Window')]")
+    LINK = "//a[@href='/windows/new']"
+    TEXT_NEW_TAB = "//h3[contains(text(),'New Window')]"
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.first_window = self.driver.current_window_handle
+    def __init__(self, browser: Browser):
+        self.browser = browser
+        self.button_link = Button(browser, MainPageWindows.LINK)
+        self.first_window = self.browser.current_window_handle()
         self.second_window = None
         self.third_window = None
 
     def check_page_load(self) -> None:
         """Ждем загрузку стр"""
-        WebDriverWait(self.driver, MainPageWindows.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageWindows.LINK))
+        self.button_link.wait_for_visible()
 
     def open_new_tabs(self) -> tuple[str, str]:
         """Открываем новую вкладку и получаем текст"""
-        link = WebDriverWait(self.driver, MainPageWindows.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageWindows.LINK))
-        new_windows_before = len(self.driver.window_handles)
-        link.click()
-        WebDriverWait(self.driver, MainPageWindows.TIMEOUT).until(lambda d: len(d.window_handles) > new_windows_before)
-        for window in self.driver.window_handles:
-            if window != self.first_window and window != self.second_window:
-                self.third_window = window
-            elif window != self.first_window and self.second_window is None:
-                self.second_window = window
 
-        if self.third_window:
-            self.driver.switch_to.window(self.third_window)
-        elif self.second_window:
-            self.driver.switch_to.window(self.second_window)
+        self.button_link.click()
 
-        text_new_tab = WebDriverWait(self.driver, MainPageWindows.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageWindows.TEXT_NEW_TAB)
-        ).text
-        title = self.driver.title
+        handles = self.browser.get_current_windows()
+        for handle in handles:
+            if handle not in [self.first_window, self.second_window]:
+                self.third_window = handle
+            elif handle != self.first_window and self.second_window is None:
+                self.second_window = handle
+
+        # переключаемся на новую вкладку
+        target_window = self.third_window or self.second_window
+        self.browser.driver.switch_to.window(target_window)
+
+        text_new_tab = Button(self.browser, self.TEXT_NEW_TAB).wait_for_presence().text
+        title = self.browser.driver.title
         return text_new_tab, title
 
     def back_to_original_window(self) -> None:
-        """Возвращаемся на предыдущую страницу"""
-        self.driver.switch_to.window(self.first_window)
-        WebDriverWait(self.driver, MainPageWindows.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageWindows.LINK))
+        """Возвращаемся на первую вкладку"""
+        self.browser.switch_to_window_handle(self.first_window)
+        self.button_link.wait_for_clickable()
 
     def close_tabs(self) -> None:
-        """Закрываем вкладки"""
+        """Закрываем дополнительные вкладки"""
+        handles = self.browser.get_current_windows()
         for win in [self.third_window, self.second_window]:
-            if win and win in self.driver.window_handles:
-                self.driver.switch_to.window(win)
-                self.driver.close()
-
-        self.driver.switch_to.window(self.first_window)
+            if win and win in handles:
+                self.browser.switch_to_window_handle(win)
+                self.browser.close()
+        self.browser.switch_to_window_handle(self.first_window)

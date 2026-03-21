@@ -2,17 +2,18 @@ from pages.main_page_popup import MainPage
 from utils.faker_text import get_random_text
 
 """Задание 2"""
+LINK_SITE2 = "https://the-internet.herokuapp.com/javascript_alerts"
 
 
-def test_alert(open_page_alert):
+def test_alert(test_driver):
     true_text_alert = "I am a JS Alert"
     true_text_result = "You successfully clicked an alert"
     true_text_js_confirm = "I am a JS Confirm"
     true_text_result_js_confirm = "You clicked: Ok"
     true_text_alert_js_prompt = "I am a JS prompt"
 
-    test = MainPage(open_page_alert)
-    test.check_page_load()
+    test = MainPage(test_driver)
+    test_driver.get(LINK_SITE2)
     text_alert = test.click_alert()
     text_result = test.get_text_result()
     text_js_confirm = test.click_button_js_confirm()

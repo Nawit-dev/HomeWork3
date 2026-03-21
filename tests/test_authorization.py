@@ -10,5 +10,6 @@ def test_authorization(test_driver):
     true_text = "Congratulations! You must have the proper credentials."
     test_driver.get(LINK_SITE)
     page = MainPage(test_driver)
-    text_from_page = page.get_text()
+    page.check_page_load()
+    text_from_page = page.get_text_after_basic_auth()
     assert text_from_page == true_text, f"Текущий результат {text_from_page}, ожидаемый результат {true_text}"

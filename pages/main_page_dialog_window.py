@@ -1,7 +1,6 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.action_chains import ActionChains
+from browser.browser import Browser
+from elements.label import Label
+from elements.button import Button
 import os
 import pyautogui
 import time
@@ -10,37 +9,34 @@ import time
 
 
 class MainPageDialogWindow:
-    TIMEOUT = 10
-    HEAD_TEXT = (By.XPATH, "//*[@id='content']//h3")
-    FILE_UPLOAD = (By.ID, "drag-drop-upload")
-    BUTTON_UPLOAD = (By.ID, "file-submit")
+    HEAD_TEXT = "//*[@id='content']//h3"
+    FILE_UPLOAD = "drag-drop-upload"
+    BUTTON_UPLOAD = "file-submit"
     IMG_PATH = os.path.join(os.getcwd(), "images", "img1.png")
-    IMG_NAME = (By.XPATH, "//span[@data-dz-name]")
-    CHECK_SPAN = (By.XPATH, "//span[contains(text(), '✔')]")
+    IMG_NAME = "//span[@data-dz-name]"
+    CHECK_SPAN = "//span[contains(text(), '✔')]"
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, browser: Browser):
+        self.browser = browser
+        self.head_text = Label(browser, MainPageDialogWindow.HEAD_TEXT)
+        self.file_upload = Button(browser, MainPageDialogWindow.FILE_UPLOAD)
+        self.img_name = Label(browser, MainPageDialogWindow.IMG_NAME)
+        self.check_span = Label(browser, MainPageDialogWindow.CHECK_SPAN)
 
     def check_page_load(self) -> None:
         """Ждем загрузку стр"""
-        WebDriverWait(self.driver, MainPageDialogWindow.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageDialogWindow.HEAD_TEXT))
+        self.head_text.wait_for_presence()
 
     def load_img(self) -> None:
         """Загружаем картинку через диалоговое окно"""
-        upload_file = WebDriverWait(self.driver, MainPageDialogWindow.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageDialogWindow.FILE_UPLOAD))
-        ActionChains(self.driver).click(upload_file).perform()
+        self.file_upload.click_via_actions()
         time.sleep(1)
         pyautogui.typewrite(MainPageDialogWindow.IMG_PATH)
         pyautogui.hotkey("enter")
 
     def get_text(self) -> tuple[str, str]:
         """Получаем название картинки"""
-        element_text_img_name = WebDriverWait(self.driver, MainPageDialogWindow.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageDialogWindow.IMG_NAME))
-        img_text = element_text_img_name.text
-        element_img = WebDriverWait(self.driver, MainPageDialogWindow.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageDialogWindow.CHECK_SPAN))
-        check_span = element_img.text
+        img_text = self.img_name.get_text()
+        check_span = self.check_span.get_text()
+
         return img_text, check_span

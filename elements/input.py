@@ -3,6 +3,7 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 from logger.logger import Logger
 from .base_elements import BaseElement
 
+
 class Input(BaseElement):
     def clear(self) -> None:
         element = self.wait_for_visible()
@@ -24,5 +25,3 @@ class Input(BaseElement):
         except WebDriverException as err:
             Logger.error(f"{self}: {err}")
             raise
-
-    

@@ -1,10 +1,16 @@
 from pages.main_page_windows import MainPageWindows
 
+"""Задание 7"""
 
-def test_windows(open_page_windows):
+LINK_SITE6 = "http://the-internet.herokuapp.com/windows"
+
+
+def test_windows(test_driver):
     true_text_new_window = "New Window"
     true_name_tab = "New Window"
-    test = MainPageWindows(open_page_windows)
+
+    test_driver.get(LINK_SITE6)
+    test = MainPageWindows(test_driver)
     test.check_page_load()
     text_new_window, name_tab = test.open_new_tabs()
     test.back_to_original_window()

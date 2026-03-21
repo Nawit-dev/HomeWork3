@@ -1,42 +1,38 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
+from browser.browser import Browser
+from elements.label import Label
+from elements.button import Button
 import os
 
 """Задание 11"""
 
 
 class MainPageUploadImage:
-    TIMEOUT = 10
-    HEAD_TEXT = (By.XPATH, "//*[@id='content']//h3")
-    FILE_UPLOAD = (By.ID, "file-upload")
-    BUTTON_UPLOAD = (By.ID, "file-submit")
-    IMG_NAME = (By.ID, "uploaded-files")
+    HEAD_TEXT = "//*[@id='content']//h3"
+    FILE_UPLOAD = "file-upload"
+    BUTTON_UPLOAD = "file-submit"
+    IMG_NAME = "uploaded-files"
     IMG_PATH = os.path.join(os.getcwd(), "images", "img1.png")
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, browser: Browser):
+        self.browser = browser
+        self.head_text = Label(browser, MainPageUploadImage.HEAD_TEXT)
+        self.file_upload = Button(browser, MainPageUploadImage.FILE_UPLOAD)
+        self.btn_upload = Button(browser, MainPageUploadImage.BUTTON_UPLOAD)
+        self.img_name = Label(browser, MainPageUploadImage.IMG_NAME)
 
     def check_page_load(self) -> None:
         """Ждем загрузку стр"""
-        WebDriverWait(self.driver, MainPageUploadImage.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageUploadImage.HEAD_TEXT))
+        self.head_text.wait_for_presence()
 
     def load_img(self) -> None:
         """Загружаем картинку"""
-        upload_file = WebDriverWait(self.driver, MainPageUploadImage.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageUploadImage.FILE_UPLOAD))
-        upload_file.send_keys(MainPageUploadImage.IMG_PATH)
-        button_upload = WebDriverWait(self.driver, MainPageUploadImage.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageUploadImage.BUTTON_UPLOAD))
-        button_upload.click()
+        self.file_upload.send_keys(MainPageUploadImage.IMG_PATH)
+        self.btn_upload.click()
 
     def get_text(self) -> tuple[str, str]:
         """Получаем текст о загрузке"""
-        element_head = WebDriverWait(self.driver, MainPageUploadImage.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageUploadImage.HEAD_TEXT))
-        head_text = element_head.text
-        element_img = WebDriverWait(self.driver, MainPageUploadImage.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageUploadImage.IMG_NAME))
-        img_name = element_img.text
+
+        head_text = self.head_text.get_text()
+        img_name = self.img_name.get_text()
+
         return head_text, img_name

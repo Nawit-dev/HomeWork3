@@ -1,11 +1,9 @@
 import time
 from selenium.common import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from elements.base_elements import BaseElement
-from selenium.webdriver import ActionChains
 from logger.logger import Logger
 
 
@@ -45,6 +43,14 @@ class Browser:
         except WebDriverException as err:
             Logger.error(f"{self}: {err}")
 
+    def execute_script(self, script: str, *args) -> None:
+        Logger.info(f"{self}: execute script = '{script}' with args '{args}'")
+        try:
+            self._driver.execute_script(script, *args)
+        except WebDriverException as err:
+            Logger.error(f"{self}: {err}")
+            raise
+
     def switch_to_default_window(self) -> None:
         Logger.info(f"{self}: switch to default window")
         try:
@@ -69,47 +75,79 @@ class Browser:
                     Logger.error(f"{self}: window with '{title}' wasn't found")
                     raise ValueError(f"{self}: window with title '{title}' wasn't found")
 
+    def switch_to_window_handle(self, handle: str) -> None:
+        Logger.info(f"{self}: switch to window by handle '{handle}'")
+        try:
+            self._driver.switch_to.window(handle)
+        except WebDriverException as err:
+            Logger.error(f"{self}: {err}")
+            raise
+
     def wait_alert_present(self):
+        expected_conditions_alert = expected_conditions.alert_is_present()
         Logger.info(f"{self}: wait alert present")
-        return self._wait.until(expected_conditions.alert_is_present())
+        return self._wait.until(expected_conditions_alert)
 
     def switch_to_alert(self):
         Logger.info(f"{self}: switch to alert")
         self.wait_alert_present()
         return self.driver.switch_to.alert
 
-    def get_alert_text(self):
+    def get_alert_text(self) -> str:
         Logger.info(f"{self}: get alert text")
-        return self.switch_to_alert().text
+        alert = self.switch_to_alert()
+        return alert.text
 
     def accept_alert(self):
+        alert = self.switch_to_alert()
         Logger.info(f"{self}: accept alert")
-        self.switch_to_alert().accept()
+        alert.accept()
 
     def send_keys_alert(self, text: str):
+        alert = self.switch_to_alert()
         Logger.info(f"{self}: send '{text} to alert'")
-        self.switch_to_alert().send_keys(text)
+        alert.send_keys(text)
 
     def switch_to_frame(self, frame: BaseElement):
+        frame_el = frame.wait_for_presence()
         Logger.info(f"{self}: switch to frame")
-        return self.driver.switch_to.frame(frame.wait_for_presence())
+        return self.driver.switch_to.frame(frame_el)
 
-    def action_chains(self, element: WebElement, action_type: str = "context_click"):
-        if isinstance(element, BaseElement):
-            element = element.wait_for_visible()
-        actions = ActionChains(self._driver)
-        if action_type == "click":
-            actions.click(element)
-        elif action_type == "context_click":
-            actions.context_click(element)
-        elif action_type == "double_click":
-            actions.double_click(element)
-        else:
-            raise ValueError(f"Action '{action_type}' не поддерживается")
-        actions.perform()
+    def switch_to_default_content(self):
+        Logger.info(f"{self}: switch to default content")
+        self.driver.switch_to.default_content()
 
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__}[{self._driver.session_id}]"
+    def refresh_page(self):
+        return self._driver.refresh()
 
-    def __repr__(self) -> str:
-        return str(self)
+    def return_url(self):
+        return self._driver.current_url
+
+    def navigate_back(self):
+        return self._driver.back()
+
+    def current_window_handle(self) -> str:
+        """Возвращает хэндл текущей вкладки"""
+        return self._driver.current_window_handle
+
+    def get_current_windows(self) -> list[str]:
+        """Возвращает список текущих открытых окон/вкладок"""
+        return self._driver.window_handles.copy()
+
+    def wait_for_new_window(self, old_windows: list[str], timeout: int = None) -> str:
+        """Ждём появления новой вкладки/окна и возвращаем её хэндл"""
+        if timeout is None:
+            timeout = self.DEFAULT_TIMEOUT
+
+        new_window = WebDriverWait(self.driver, timeout).until(
+            lambda d: next((w for w in d.window_handles if w not in old_windows), None)
+        )
+        return new_window
+
+
+def __str__(self) -> str:
+    return f"{self.__class__.__name__}[{self._driver.session_id}]"
+
+
+def __repr__(self) -> str:
+    return str(self)

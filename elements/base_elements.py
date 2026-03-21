@@ -5,11 +5,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver import Keys, ActionChains
+from enum import StrEnum
 
 from logger.logger import Logger
 
 if TYPE_CHECKING:
-    from browser.browser import Browser  # импорт только для type hints, цикл не ломает
+    from browser.browser import Browser
+
+
+class ElementActionType(StrEnum):
+    CLICK = "click"
+    CONTEXT_CLICK = "context_click"
+    DOUBLE_CLICK = "double_click"
 
 
 class BaseElement:
@@ -55,6 +63,17 @@ class BaseElement:
         try:
             Logger.info(f"{self}: wait for not {expected_condition.__name__}")
             self._wait.until_not(method=expected_condition(self.locator))
+        except TimeoutException as err:
+            Logger.error(f"{self}: {err}")
+            raise
+
+    def wait_for_all_presence(self) -> list[WebElement]:
+        try:
+            Logger.info(f"{self}: wait for all elements presence")
+            elements = self._wait.until(
+                ec.presence_of_all_elements_located(self.locator)
+            )
+            return elements
         except TimeoutException as err:
             Logger.error(f"{self}: {err}")
             raise
@@ -116,3 +135,40 @@ class BaseElement:
             raise
         Logger.info(f"{self}: attribute '{name}' = '{value}'")
         return value
+
+    def click_via_actions(self):
+        element = self.wait_for_clickable()
+        actions = ActionChains(self.browser.driver)
+        actions.click(element).perform()
+
+    def context_click_via_actions(self):
+        """Клик пкм"""
+        element = self.wait_for_clickable()
+        actions = ActionChains(self.browser.driver)
+        actions.context_click(element).perform()
+
+    def double_click(self):
+        element = self.wait_for_clickable()
+        actions = ActionChains(self.browser.driver)
+        actions.double_click(element).perform()
+
+    def move_slider_left(self, steps):
+        """Двигаем слайдер влево на определенное кол-во шагов"""
+        self.wait_for_clickable()
+        actions = ActionChains(self.browser.driver)
+        for _ in range(steps):
+            actions.send_keys(Keys.ARROW_LEFT)
+        actions.perform()
+
+    def move_to_element(self):
+        element = self.wait_for_visible()
+        action = ActionChains(self.browser.driver)
+        action.move_to_element(element).perform()
+
+    def scroll_by_amount(self, x: int, y: int):
+        action = ActionChains(self.browser.driver)
+        action.scroll_by_amount(x, y).perform()
+
+    def send_keys(self, elements):
+        element = self.wait_for_clickable()
+        element.send_keys(elements)

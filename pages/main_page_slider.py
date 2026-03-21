@@ -1,40 +1,32 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver import Keys, ActionChains
-
+from browser.browser import Browser
+from elements.button import Button
+from elements.label import Label
 
 """Задание 5"""
 
 
 class MainPageSlider:
-    TIMEOUT = 10
+    HEAD_TEXT = "//*[@id='content']//h3"
+    SLIDER = "//input[@type='range']"
+    NUMBER_SLIDER = "range"
 
-    HEAD_TEXT = (By.XPATH, "//*[@id='content']//h3")
-    SLIDER = (By.XPATH, "//input[@type='range']")
-    NUMBER_SLIDER = (By.ID, "range")
-
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, browser: Browser):
+        self.browser = browser
+        self.button = Button(browser, MainPageSlider.SLIDER)
+        self.head_text = Label(browser, MainPageSlider.HEAD_TEXT)
+        self.number_slider = Label(browser, MainPageSlider.NUMBER_SLIDER)
 
     def check_page_load(self) -> None:
         """Ждем загрузку стр"""
-        WebDriverWait(self.driver, MainPageSlider.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageSlider.HEAD_TEXT))
+        self.head_text.wait_for_visible()
 
     def change_number_slider(self, steps) -> None:
         """Устанавливаем случайное значение слайдера"""
-        slider = WebDriverWait(self.driver, MainPageSlider.TIMEOUT).until(
-            ec.element_to_be_clickable(MainPageSlider.SLIDER))
-        slider.click()
-        action = ActionChains(self.driver)
-        for _ in range(steps):
-            action.send_keys(Keys.ARROW_LEFT)
-        action.perform()
+        self.button.click()
+        self.button.move_slider_left(steps)
 
     def get_number_slider(self) -> float:
         """Получаем номер слайдера"""
-        number = WebDriverWait(self.driver, MainPageSlider.TIMEOUT).until(
-            ec.presence_of_element_located(MainPageSlider.NUMBER_SLIDER))
-        result = float(number.text)
+        number = self.number_slider.get_text()
+        result = float(number)
         return result
