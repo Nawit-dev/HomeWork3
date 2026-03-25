@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import WebDriverException
 
 from logger.logger import Logger
 from .base_elements import BaseElement

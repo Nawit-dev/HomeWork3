@@ -1,16 +1,22 @@
-from pages.main_page_frames import MainPageFrames
+from pages.page_frames import PageFrames
 
 """Задание 8"""
 LINK_SITE7 = "https://demoqa.com/frames"
 
 
 def test_frames(test_driver):
-    true_text = "Parent frame"
-    child_text = "Child Iframe"
+    true_parent_text = "Parent frame"
+    true_child_text = "Child Iframe"
 
     test_driver.get(LINK_SITE7)
-    test = MainPageFrames(test_driver)
-    test.check_page_load()
-    text, text_two = test.open_nested_frames()
-    assert true_text == text, f"Фактический результат {text}, ожидаемы результат{true_text}"
-    assert child_text == text_two, f"Фактический результат {text}, ожидаемы результат{text_two}"
+    frames_page = PageFrames(test_driver)
+    frames_page.wait_page_load()
+
+    frames_page.open_nested_frames()
+
+    text_parent_frame = frames_page.get_parent_frame_text()
+    text_child_frame = frames_page.get_child_frame_text()
+    assert true_parent_text == text_parent_frame, (f"Фактический результат {text_parent_frame}, "
+                                                   f"ожидаемы результат{true_parent_text}")
+    assert true_child_text == text_child_frame, (f"Фактический результат {text_child_frame}, "
+                                                 f"ожидаемы результат{true_child_text}")

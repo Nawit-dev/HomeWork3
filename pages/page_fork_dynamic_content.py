@@ -1,29 +1,27 @@
+from .base_page import BasePage
 from browser.browser import Browser
-from elements.label import Label
+from elements.button import Button
+from elements.multy_web_element import MultiWebElement
 
 """Задание 9"""
 
 
-class MainPageDynamicContent:
-    LINK = "//a[@href='https://github.com/tourdedave/the-internet']"
-    IMG = "//div[contains(@class, 'large-2 columns')]//img"
+class PageDynamicContent(BasePage):
+    UNIQUE_ELEMENT_LOC = "//*[@id='content']//h3"
+    IMG = "//div//div[{}]//img"
 
     def __init__(self, browser: Browser):
-        self.browser = browser
-        self.link = Label(browser, MainPageDynamicContent.LINK)
-        self.img = Label(browser,MainPageDynamicContent.IMG)
+        super().__init__(browser)
+        self.unique_element = Button(browser, self.UNIQUE_ELEMENT_LOC, description="unique_element")
+        self.img = MultiWebElement(browser, self.IMG, description="img")
 
-    def check_page_load(self) -> None:
-        """Ждем загрузку стр"""
-        self.link.wait_for_presence()
-
-    def refresh_page(self) -> bool:
+    def refresh_until_images_match(self) -> bool:
         """Обновляем страницу до тех пор, пока
         любых два изображения из трех не будут
         совпадать
         """
         while True:
-            img_list = self.img.wait_for_all_presence()
+            img_list = self.img
             src_list = []
             for img in img_list:
                 src_list.append(img.get_attribute('src'))

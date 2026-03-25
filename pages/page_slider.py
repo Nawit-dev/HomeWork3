@@ -1,29 +1,26 @@
+from .base_page import BasePage
 from browser.browser import Browser
-from elements.button import Button
+from elements.slider import Slider
 from elements.label import Label
 
 """Задание 5"""
 
 
-class MainPageSlider:
-    HEAD_TEXT = "//*[@id='content']//h3"
+class PageSlider(BasePage):
+    UNIQUE_ELEMENT_LOC = "//*[@id='content']//h3"
     SLIDER = "//input[@type='range']"
     NUMBER_SLIDER = "range"
 
     def __init__(self, browser: Browser):
-        self.browser = browser
-        self.button = Button(browser, MainPageSlider.SLIDER)
-        self.head_text = Label(browser, MainPageSlider.HEAD_TEXT)
-        self.number_slider = Label(browser, MainPageSlider.NUMBER_SLIDER)
-
-    def check_page_load(self) -> None:
-        """Ждем загрузку стр"""
-        self.head_text.wait_for_visible()
+        super().__init__(browser)
+        self.slider = Slider(browser, self.SLIDER, description="btn slider")
+        self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, description="unique element")
+        self.number_slider = Label(browser, self.NUMBER_SLIDER, description="text number slider")
 
     def change_number_slider(self, steps) -> None:
         """Устанавливаем случайное значение слайдера"""
-        self.button.click()
-        self.button.move_slider_left(steps)
+        self.slider.click()
+        self.slider.move_slider_left(steps)
 
     def get_number_slider(self) -> float:
         """Получаем номер слайдера"""

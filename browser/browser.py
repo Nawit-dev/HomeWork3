@@ -28,7 +28,7 @@ class Browser:
         try:
             self._driver.get(url)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
         self.main_handle = self._driver.current_window_handle
 
@@ -41,14 +41,14 @@ class Browser:
         try:
             self._driver.quit()
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
 
     def execute_script(self, script: str, *args) -> None:
         Logger.info(f"{self}: execute script = '{script}' with args '{args}'")
         try:
             self._driver.execute_script(script, *args)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def switch_to_default_window(self) -> None:
@@ -56,7 +56,7 @@ class Browser:
         try:
             self._driver.switch_to.window(self.main_handle)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def switch_to_window(self, title: str) -> None:
@@ -80,7 +80,7 @@ class Browser:
         try:
             self._driver.switch_to.window(handle)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def wait_alert_present(self):
@@ -89,13 +89,13 @@ class Browser:
         return self._wait.until(expected_conditions_alert)
 
     def switch_to_alert(self):
-        Logger.info(f"{self}: switch to alert")
         self.wait_alert_present()
+        Logger.info(f"{self}: switch to alert")
         return self.driver.switch_to.alert
 
     def get_alert_text(self) -> str:
-        Logger.info(f"{self}: get alert text")
         alert = self.switch_to_alert()
+        Logger.info(f"{self}: get alert text")
         return alert.text
 
     def accept_alert(self):
@@ -118,36 +118,32 @@ class Browser:
         self.driver.switch_to.default_content()
 
     def refresh_page(self):
+        Logger.info(f"{self}: refresh page")
         return self._driver.refresh()
 
-    def return_url(self):
-        return self._driver.current_url
+    def get_url(self):
+        url = self._driver.current_url
+        Logger.info(f"{self}: get current url -> {url}")
+        return url
 
     def navigate_back(self):
+        Logger.info(f"{self}: navigate back")
         return self._driver.back()
 
-    def current_window_handle(self) -> str:
+    def get_current_window_handle(self) -> str:
         """Возвращает хэндл текущей вкладки"""
-        return self._driver.current_window_handle
+        handle = self._driver.current_window_handle
+        Logger.info(f"{self}: get current window handle -> {handle}")
+        return handle
 
     def get_current_windows(self) -> list[str]:
         """Возвращает список текущих открытых окон/вкладок"""
-        return self._driver.window_handles.copy()
+        handles = self._driver.window_handles.copy()
+        Logger.info(f"{self}: get all window handles -> {handles}")
+        return handles
 
-    def wait_for_new_window(self, old_windows: list[str], timeout: int = None) -> str:
-        """Ждём появления новой вкладки/окна и возвращаем её хэндл"""
-        if timeout is None:
-            timeout = self.DEFAULT_TIMEOUT
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}[{self._driver.session_id}]"
 
-        new_window = WebDriverWait(self.driver, timeout).until(
-            lambda d: next((w for w in d.window_handles if w not in old_windows), None)
-        )
-        return new_window
-
-
-def __str__(self) -> str:
-    return f"{self.__class__.__name__}[{self._driver.session_id}]"
-
-
-def __repr__(self) -> str:
-    return str(self)
+    def __repr__(self) -> str:
+        return str(self)

@@ -1,0 +1,95 @@
+[2026-03-25 23:19:51,066 - ERROR] - WebElement[text scroll elements[4]]: 
+[2026-03-25 23:19:51,069 - INFO] - WebElement[text scroll elements[3]]: wait for visibility_of_element_located
+[2026-03-25 23:19:51,083 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:19:51,088 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:19:51,093 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:19:51,097 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:19:51,101 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,207 - ERROR] - WebElement[text scroll elements[5]]: 
+[2026-03-25 23:20:01,207 - INFO] - WebElement[text scroll elements[4]]: wait for visibility_of_element_located
+[2026-03-25 23:20:01,218 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,222 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,226 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,230 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,234 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:01,238 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,343 - ERROR] - WebElement[text scroll elements[6]]: 
+[2026-03-25 23:20:11,344 - INFO] - WebElement[text scroll elements[5]]: wait for visibility_of_element_located
+[2026-03-25 23:20:11,355 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,359 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,362 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,366 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,369 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,373 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:11,377 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,484 - ERROR] - WebElement[text scroll elements[7]]: 
+[2026-03-25 23:20:21,484 - INFO] - WebElement[text scroll elements[6]]: wait for visibility_of_element_located
+[2026-03-25 23:20:21,495 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,500 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,503 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,507 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,511 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,515 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,518 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:20:21,522 - INFO] - WebElement[text scroll elements[8]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,629 - ERROR] - WebElement[text scroll elements[8]]: 
+[2026-03-25 23:20:31,629 - INFO] - WebElement[text scroll elements[7]]: wait for visibility_of_element_located
+[2026-03-25 23:20:31,640 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,644 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,647 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,651 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,654 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,658 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,662 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,665 - INFO] - WebElement[text scroll elements[8]]: wait for presence_of_element_located
+[2026-03-25 23:20:31,669 - INFO] - WebElement[text scroll elements[9]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,816 - ERROR] - WebElement[text scroll elements[9]]: 
+[2026-03-25 23:20:41,816 - INFO] - WebElement[text scroll elements[8]]: wait for visibility_of_element_located
+[2026-03-25 23:20:41,827 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,832 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,835 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,839 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,843 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,846 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,850 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,854 - INFO] - WebElement[text scroll elements[8]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,857 - INFO] - WebElement[text scroll elements[9]]: wait for presence_of_element_located
+[2026-03-25 23:20:41,861 - INFO] - WebElement[text scroll elements[10]]: wait for presence_of_element_located
+[2026-03-25 23:20:51,971 - ERROR] - WebElement[text scroll elements[10]]: 
+[2026-03-25 23:20:51,972 - INFO] - WebElement[text scroll elements[9]]: wait for visibility_of_element_located
+[2026-03-25 23:20:51,983 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:20:51,987 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:20:51,991 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:20:51,994 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:20:51,998 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,002 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,005 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,009 - INFO] - WebElement[text scroll elements[8]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,012 - INFO] - WebElement[text scroll elements[9]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,016 - INFO] - WebElement[text scroll elements[10]]: wait for presence_of_element_located
+[2026-03-25 23:20:52,020 - INFO] - WebElement[text scroll elements[11]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,127 - ERROR] - WebElement[text scroll elements[11]]: 
+[2026-03-25 23:21:02,127 - INFO] - WebElement[text scroll elements[10]]: wait for visibility_of_element_located
+[2026-03-25 23:21:02,138 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,142 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,146 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,150 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,154 - INFO] - WebElement[text scroll elements[5]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,158 - INFO] - WebElement[text scroll elements[6]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,161 - INFO] - WebElement[text scroll elements[7]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,165 - INFO] - WebElement[text scroll elements[8]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,169 - INFO] - WebElement[text scroll elements[9]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,172 - INFO] - WebElement[text scroll elements[10]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,176 - INFO] - WebElement[text scroll elements[11]]: wait for presence_of_element_located
+[2026-03-25 23:21:02,179 - INFO] - WebElement[text scroll elements[12]]: wait for presence_of_element_located
+[2026-03-25 23:21:11,016 - INFO] - Browser[b7959a14994e248abc1a133a385a93ee]: quit
+[2026-03-25 23:21:21,945 - INFO] - Start webdriver 'chrome' with options '[]'
+[2026-03-25 23:21:22,566 - INFO] - Browser[988c1dea74e2713fc919c1531a656ea2]: get 'http://the-internet.herokuapp.com/infinite_scroll'
+[2026-03-25 23:21:52,159 - INFO] - <pages.page_scroll.PageScroll object at 0x0000024C23118440>: wait for page load - waiting for Label[unique_element]
+[2026-03-25 23:21:52,159 - INFO] - Label[unique_element]: wait for presence_of_element_located
+[2026-03-25 23:21:52,165 - INFO] - WebElement[text scroll elements[1]]: wait for presence_of_element_located
+[2026-03-25 23:21:52,171 - INFO] - WebElement[text scroll elements[2]]: wait for presence_of_element_located
+[2026-03-25 23:21:52,682 - INFO] - WebElement[text scroll elements[3]]: wait for presence_of_element_located
+[2026-03-25 23:21:52,688 - INFO] - WebElement[text scroll elements[4]]: wait for presence_of_element_located
+[2026-03-25 23:22:02,795 - ERROR] - WebElement[text scroll elements[4]]: 
+[2026-03-25 23:22:02,796 - INFO] - Browser[988c1dea74e2713fc919c1531a656ea2]: quit

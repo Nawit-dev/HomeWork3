@@ -1,37 +1,41 @@
-from pages.main_page_hover import MainPageHover
+import pytest
+
+from pages.page_hover import PageHover
 
 """Задание 6"""
 
 LINK_SITE5 = "http://the-internet.herokuapp.com/hovers"
 
+# Данные для всех 3 пользователей
+users_data = [
+    {"index": 1, "expected_name": "name: user1", "expected_url": "https://the-internet.herokuapp.com/users/1"},
+    {"index": 2, "expected_name": "name: user2", "expected_url": "https://the-internet.herokuapp.com/users/2"},
+    {"index": 3, "expected_name": "name: user3", "expected_url": "https://the-internet.herokuapp.com/users/3"},
+]
 
-def test_hover(test_driver):
-    # Данные для всех 3 пользователей
-    users_data = [
-        {"index": 1, "expected_name": "name: user1", "expected_url": "https://the-internet.herokuapp.com/users/1"},
-        {"index": 2, "expected_name": "name: user2", "expected_url": "https://the-internet.herokuapp.com/users/2"},
-        {"index": 3, "expected_name": "name: user3", "expected_url": "https://the-internet.herokuapp.com/users/3"},
-    ]
+
+@pytest.mark.parametrize("data", users_data)
+def test_hover(test_driver, data):
     test_driver.get(LINK_SITE5)
-    test = MainPageHover(test_driver)
-    test.check_page_load()
+    hover_page = PageHover(test_driver)
+    hover_page.wait_page_load()
 
-    for user in users_data:
-        # Навести курсор и проверить имя
-        user_name_hover = test.hover_mouse(user["index"])
-        assert user_name_hover == user["expected_name"], (
-            f"Пользователь {user['index']}: Фактический результат '{user_name_hover}'"
-            f"ожидаемый результат '{user['expected_name']}'"
-        )
+    # Навести курсор и проверить имя
+    user_name_hover = hover_page.hover_mouse(data["index"])
+    assert user_name_hover == data["expected_name"], (
+        f"Пользователь {data['index']}: Фактический результат '{user_name_hover}'"
+        f"ожидаемый результат '{data['expected_name']}'"
+    )
 
-        # Перейти по ссылке и проверить URL
-        link_user = test.click_link_hover(user["index"])
-        assert link_user == user["expected_url"], (
-            f"Пользователь {user['index']}: Фактический результат '{link_user}'"
-            f"ожидаемый результат '{user['expected_url']}'"
-        )
+    # Перейти по ссылке и проверить URL
+    hover_page.click_link_hover(data["index"])
+    link_user = hover_page.get_url_usr()
+    assert link_user == data["expected_url"], (
+        f"Пользователь {data['index']}: Фактический результат '{link_user}'"
+        f"ожидаемый результат '{data['expected_url']}'"
+    )
 
-        # Вернуться на предыдущую страницу
-        test.go_back()
+    # Вернуться на предыдущую страницу и дожидаемся загрузки
+    hover_page.go_back()
+    hover_page.wait_page_load()
 
-        print(f"Пользователь {user['index']} проверен успешно")

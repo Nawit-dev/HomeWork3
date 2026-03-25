@@ -1,11 +1,10 @@
-from __future__ import annotations  # поддержка строковых аннотаций
 from typing import TYPE_CHECKING
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver import Keys, ActionChains
+from selenium.webdriver import ActionChains
 from enum import StrEnum
 
 from logger.logger import Logger
@@ -24,7 +23,7 @@ class BaseElement:
     DEFAULT_TIMEOUT = 10
 
     def __init__(self,
-                 browser: Browser,
+                 browser: "Browser",
                  locator: str | tuple,
                  description: str = None,
                  timeout: int = DEFAULT_TIMEOUT
@@ -56,7 +55,7 @@ class BaseElement:
             element = self._wait.until(method=expected_condition(self.locator))
             return element
         except TimeoutException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def _wait_for_not(self, expected_condition) -> None:
@@ -64,18 +63,7 @@ class BaseElement:
             Logger.info(f"{self}: wait for not {expected_condition.__name__}")
             self._wait.until_not(method=expected_condition(self.locator))
         except TimeoutException as err:
-            Logger.error(f"{self}: {err}")
-            raise
-
-    def wait_for_all_presence(self) -> list[WebElement]:
-        try:
-            Logger.info(f"{self}: wait for all elements presence")
-            elements = self._wait.until(
-                ec.presence_of_all_elements_located(self.locator)
-            )
-            return elements
-        except TimeoutException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def wait_for_presence(self) -> WebElement:
@@ -100,7 +88,7 @@ class BaseElement:
         try:
             elements.click()
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
 
     def get_text(self) -> str:
@@ -109,7 +97,7 @@ class BaseElement:
         try:
             text = element.text
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
         Logger.info(f"{self}: text = '{text}'")
         return text
@@ -120,7 +108,7 @@ class BaseElement:
         try:
             value = element.get_attribute(name)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
         Logger.info(f"{self}: attribute '{name}' = '{value}'")
         return value
@@ -131,7 +119,7 @@ class BaseElement:
         try:
             value = element.value_of_css_property(name)
         except WebDriverException as err:
-            Logger.error(f"{self}: {err}")
+            Logger.error(f"{self}: {err.msg}")
             raise
         Logger.info(f"{self}: attribute '{name}' = '{value}'")
         return value
@@ -152,23 +140,12 @@ class BaseElement:
         actions = ActionChains(self.browser.driver)
         actions.double_click(element).perform()
 
-    def move_slider_left(self, steps):
-        """Двигаем слайдер влево на определенное кол-во шагов"""
-        self.wait_for_clickable()
-        actions = ActionChains(self.browser.driver)
-        for _ in range(steps):
-            actions.send_keys(Keys.ARROW_LEFT)
-        actions.perform()
-
     def move_to_element(self):
         element = self.wait_for_visible()
         action = ActionChains(self.browser.driver)
         action.move_to_element(element).perform()
 
-    def scroll_by_amount(self, x: int, y: int):
-        action = ActionChains(self.browser.driver)
-        action.scroll_by_amount(x, y).perform()
-
-    def send_keys(self, elements):
-        element = self.wait_for_clickable()
-        element.send_keys(elements)
+    def scroll_by_amount(self):
+        element = self.wait_for_visible()
+        Logger.info(f"{self}: scroll)")
+        self.browser.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)

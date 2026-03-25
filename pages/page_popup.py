@@ -1,3 +1,4 @@
+from .base_page import BasePage
 from browser.browser import Browser
 from elements.button import Button
 from elements.label import Label
@@ -5,22 +6,21 @@ from elements.label import Label
 """Задание 2"""
 
 
-class MainPage:
+class PageJavascriptAlerts(BasePage):
+    UNIQUE_ELEMENT_LOC = "//*[@id='content']//h3"
     BUTTON_JS_ALERT = "//button[@onclick='jsAlert()']"
     TEXT_RESULT = "result"
     BUTTON_JS_CONFIRM = "//button[@onclick='jsConfirm()']"
     BUTTON_JS_PROMPT = "//button[@onclick='jsPrompt()']"
 
     def __init__(self, browser: Browser):
-        self.browser = browser
-        self.button_js_alert = Button(browser, MainPage.BUTTON_JS_ALERT)
-        self.button_js_confirm = Button(browser, MainPage.BUTTON_JS_CONFIRM)
-        self.button_js_prompt = Button(browser, MainPage.BUTTON_JS_PROMPT)
-        self.label = Label(browser, MainPage.TEXT_RESULT)
-
-    def check_page_load(self) -> None:
-        """Ждем появления кнопки на стр"""
-        self.button_js_alert.wait_for_clickable()
+        super().__init__(browser)
+        self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, description="unique_element")
+        self.button_js_alert = Button(browser, self.BUTTON_JS_ALERT, description="button_js_alert")
+        self.button_js_confirm = Button(browser, self.BUTTON_JS_CONFIRM,
+                                        description="button_js_confirm")
+        self.button_js_prompt = Button(browser, self.BUTTON_JS_PROMPT, description="button_js_prompt")
+        self.label = Label(browser, self.TEXT_RESULT, description="text result")
 
     def click_alert(self) -> str:
         """Кликаем по кнопке которая вызывает alert и получаем текст alert"""
