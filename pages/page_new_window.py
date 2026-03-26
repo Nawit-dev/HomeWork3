@@ -17,5 +17,5 @@ class PageNewWindow(BasePage):
 
     def get_text(self) -> str:
         """Получает текст с новой стр"""
-        text_new_tab = Button(self.browser, self.TEXT_NEW_TAB).wait_for_presence().text
+        text_new_tab = self.button_link.get_text()
         return text_new_tab

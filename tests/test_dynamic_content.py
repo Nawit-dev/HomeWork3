@@ -10,4 +10,4 @@ def test_dynamic_content(test_driver):
     dynamic_content_page = PageDynamicContent(test_driver)
     dynamic_content_page.wait_page_load()
     result = dynamic_content_page.refresh_until_images_match()
-    assert result, f"Фактический результат {result}"
+    assert result, f"Картинки после обновления не совпадают с ожидаемыми"

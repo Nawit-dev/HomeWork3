@@ -1,6 +1,6 @@
 from pages.base_page import BasePage
 from pages.page_slider import PageSlider
-from elements.button import Button
+from elements.slider import Slider
 import random
 
 """Задание 5"""
@@ -13,14 +13,14 @@ class RangeSlider(BasePage):
 
     def __init__(self, browser):
         super().__init__(browser)
-        self.slider = Button(browser, self.SLIDER)
+        self.slider = Slider(browser, self.SLIDER, description="slider")
 
     def get_min(self) -> str:
-        min_value = self.slider.get_attribute("min")
+        min_value = self.slider.get_min()
         return min_value
 
     def get_max(self) -> str:
-        max_value = self.slider.get_attribute("max")
+        max_value = self.slider.get_max()
         return max_value
 
 

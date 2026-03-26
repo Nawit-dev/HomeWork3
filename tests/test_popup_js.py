@@ -36,12 +36,14 @@ class PageAlertsJS(BasePage):
                                         (AlertScriptConstants.CONFIRM, "I am a JS Confirm"),
                                         (AlertScriptConstants.PROMPT, "I am a JS prompt")])
 def test_alert(test_driver, name_alert):
-
     test_driver.get(LINK_SITE2)
 
     alert_page = PageAlertsJS(test_driver)
     alert_page.wait_page_load()
     text_alert = alert_page.alert_js(name_alert[0])
 
-    assert text_alert == name_alert[1], f"Фактический результат {text_alert}, ожидаемый результат {name_alert[1]}"  # Задание 2.2 , # Задание 2.4, # Задание 2.6
-
+    assert text_alert == name_alert[
+        1], f"Фактический результат {text_alert}, ожидаемый результат {name_alert[1]}"
+    # Задание 2.2,
+    # Задание 2.4,
+    # Задание 2.6

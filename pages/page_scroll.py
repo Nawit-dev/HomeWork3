@@ -2,7 +2,6 @@ from .base_page import BasePage
 from browser.browser import Browser
 from elements.label import Label
 from elements.multy_web_element import MultiWebElement
-from elements.button import Button
 
 """Задание 9"""
 
@@ -21,13 +20,7 @@ class PageScroll(BasePage):
 
         while True:
             paragraphs_list = list(self.text)
-            print(f"{paragraphs_list=}")
             last_paragraph = paragraphs_list[-1]
             if len(paragraphs_list) == age_engineer:
                 return len(paragraphs_list)
-            selenium_element = last_paragraph.wait_for_visible()
-
-            self.browser.driver.execute_script(
-                "arguments[0].scrollIntoView(true);", selenium_element
-            )
-
+            last_paragraph.scroll_into_view()

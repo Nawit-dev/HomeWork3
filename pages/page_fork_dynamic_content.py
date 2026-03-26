@@ -25,6 +25,6 @@ class PageDynamicContent(BasePage):
             src_list = []
             for img in img_list:
                 src_list.append(img.get_attribute('src'))
-            if src_list[0] == src_list[1] or src_list[0] == src_list[2] or src_list[1] == src_list[2]:
+            if len(set(src_list)) < len(src_list):
                 return True
             self.browser.refresh_page()

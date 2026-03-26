@@ -1,5 +1,4 @@
 from typing_extensions import Self
-
 from browser.browser import Browser
 from elements.web_element import WebElement
 
@@ -33,16 +32,11 @@ class MultiWebElement:
         )
         if not current_element.is_exists():
             raise StopIteration
-        else:
-            self.index += 1
-            return current_element
+        self.index += 1
+        return current_element
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}[{self.description}]"
 
     def __repr__(self) -> str:
         return str(self)
-
-
-
-

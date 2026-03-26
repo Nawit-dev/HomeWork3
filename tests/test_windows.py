@@ -1,29 +1,24 @@
 from pages.page_window import PageWindow
 from pages.page_new_window import PageNewWindow
-from pages.base_page import BasePage
-from elements.label import Label
 from browser.browser import Browser
-from elements.button import Button
 
 LINK_SITE6 = "http://the-internet.herokuapp.com/windows"
 
 """Задание 7"""
 
 
-class Tabs(BasePage):
-    UNIQUE_ELEMENT_LOC = "//*[@id='content']//h3"
+class Tabs:
     LINK = "//a[@href='/windows/new']"
     TEXT_NEW_TAB = "//h3[contains(text(),'New Window')]"
 
     def __init__(self, browser: Browser):
-        super().__init__(browser)
-        self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, description="unique element")
+        self.browser = browser
         self.first_window = self.browser.get_current_window_handle()
         self.second_window = None
         self.third_window = None
 
-    def get_text_new_tabs(self) -> str:
-        """получает текст новой вкладки"""
+    def switch_to_new_tab(self) -> None:
+        """получает список вкладок и переключается на новую"""
 
         handles = self.browser.get_current_windows()
         for handle in handles:
@@ -35,9 +30,6 @@ class Tabs(BasePage):
         # переключаемся на новую вкладку
         target_window = self.third_window or self.second_window
         self.browser.driver.switch_to.window(target_window)
-
-        text_new_tab = Button(self.browser, self.TEXT_NEW_TAB).wait_for_presence().text
-        return text_new_tab
 
     def get_title_new_tabs(self) -> str:
         """Получает title новой вкладки"""
@@ -71,18 +63,17 @@ def test_windows(test_driver):
     windows_new_page.wait_page_load()
 
     tab = Tabs(test_driver)
-    tab.wait_page_load()
 
     windows_page.open_new_tabs()
 
-    tab.get_text_new_tabs()
+    tab.switch_to_new_tab()
     text_new_window = windows_new_page.get_text()
     name_tab = tab.get_title_new_tabs()
 
     tab.back_to_original_window()
     windows_page.open_new_tabs()
 
-    tab.get_text_new_tabs()
+    tab.switch_to_new_tab()
     text_new_window2 = windows_new_page.get_text()
     name_tab2 = tab.get_title_new_tabs()
 

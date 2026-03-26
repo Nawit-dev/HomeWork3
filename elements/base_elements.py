@@ -145,7 +145,7 @@ class BaseElement:
         action = ActionChains(self.browser.driver)
         action.move_to_element(element).perform()
 
-    def scroll_by_amount(self):
+    def scroll_into_view(self):
         element = self.wait_for_visible()
         Logger.info(f"{self}: scroll)")
         self.browser.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)

@@ -2,8 +2,6 @@ from .base_page import BasePage
 from browser.browser import Browser
 from elements.button import Button
 from elements.label import Label
-import time
-
 """Задание 6"""
 
 
@@ -36,10 +34,3 @@ class PageHover(BasePage):
         link_xpath = self.LINK_HOVER_TEMPLATE.format(index)
         link = Button(self.browser, link_xpath)
         link.click()
-
-    def get_url_usr(self):
-        return self.browser.get_url()
-
-    def go_back(self) -> None:
-        """Возвращаемся на предыдущую страницу"""
-        self.browser.navigate_back()
