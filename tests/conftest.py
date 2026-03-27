@@ -5,7 +5,12 @@ from browser.browser import Browser
 
 @pytest.fixture()
 def test_driver():
-    driver = BrowserFactory.get_driver()
+    options = [
+        "--headless",
+        "--no-sandbox",
+        "--disable-dev-shm-usage"
+    ]
+    driver = BrowserFactory.get_driver(options=options)
     browser = Browser(driver)
     yield browser
     browser.quit()
