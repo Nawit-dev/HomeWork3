@@ -19,8 +19,6 @@ def test_hover(test_driver, data):
     hover_page = PageHover(test_driver)
     hover_page.wait_page_load()
 
-    def get_url_usr():
-        return test_driver.get_url()
 
     def go_back() -> None:
         """Возвращаемся на предыдущую страницу"""
@@ -35,7 +33,7 @@ def test_hover(test_driver, data):
 
     # Перейти по ссылке и проверить URL
     hover_page.click_link_hover(data["index"])
-    link_user = get_url_usr()
+    link_user = test_driver.get_url()
     assert link_user == data["expected_url"], (
         f"Пользователь {data['index']}: Фактический результат '{link_user}'"
         f"ожидаемый результат '{data['expected_url']}'"

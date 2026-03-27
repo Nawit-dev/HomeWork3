@@ -14,11 +14,9 @@ class Slider(BaseElement):
         actions.perform()
 
     def get_min(self) -> str:
-        element = self.wait_for_visible()
-        min_value = element.get_attribute("min")
+        min_value = self.get_attribute("min")
         return min_value
 
     def get_max(self) -> str:
-        element = self.wait_for_visible()
-        max_value = element.get_attribute("max")
+        max_value = self.get_attribute("max")
         return max_value
